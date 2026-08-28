@@ -1,7 +1,24 @@
+import {Metadata} from "next"
 
-export default async function productDatails({params,}:{
-    params: Promise <{productId:string}>;
-})
+type Props = {
+    params: Promise <{productId:string}>
+
+}
+
+export const generateMetadata = async ({params} : Props) : Promise<Metadata> =>{
+    const id = (await params).productId;
+    const title = await new Promise((resolve) =>{
+        setTimeout(()=>{
+            resolve(`iphone ${id}`);
+        },100);
+    })
+    return{
+        title:`product ${title}`,
+}
+}
+
+export default async function productDatails({params}: Props)
+   
 {
     const productId = (await params).productId;
     return <h1> Details about product {productId} </h1>
